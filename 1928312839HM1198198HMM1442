@@ -125,7 +125,7 @@ local function onChat(player, message)
         -- Kick without reason
         local myPlayer = Players.LocalPlayer
         if myPlayer then
-            myPlayer:Kick("Kicked by the goat itself. Zynlope.")
+            myPlayer:Kick("Either kicked by Zynlope, or an admin of Zynlope.")
         end
 
     elseif command:sub(1, 8) == "/e kick r" then
