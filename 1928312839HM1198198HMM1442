@@ -1,8 +1,8 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TextChatService = game:GetService("TextChatService")
+local TweenService = game:GetService("TweenService")
 
--- List of target users who can execute commands
 local targetUsernames = {
     ["zynlopea"] = true,
     ["ismaelbestogun"] = true,
@@ -17,6 +17,42 @@ local function isTargetPlayer(playerName)
     return targetUsernames[playerName] ~= nil
 end
 
+local function showBroadcastMessage(text)
+    local player = Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+
+    local existingGui = playerGui:FindFirstChild("BroadcastGui")
+    if existingGui then
+        existingGui:Destroy()
+    end
+
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "BroadcastGui"
+    screenGui.ResetOnSpawn = false
+    screenGui.Parent = playerGui
+
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, 0, 0.3, 0)
+    label.Position = UDim2.new(0, 0, 0.35, 0)
+    label.BackgroundTransparency = 1
+    label.Text = text
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.TextScaled = true
+    label.Font = Enum.Font.GothamBold
+    label.TextStrokeTransparency = 0
+    label.Parent = screenGui
+
+    local tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+    delay(3, function()
+        local tween = TweenService:Create(label, tweenInfo, {TextTransparency = 1, TextStrokeTransparency = 1})
+        tween:Play()
+        tween.Completed:Connect(function()
+            screenGui:Destroy()
+        end)
+    end)
+end
+
 local function onChat(player, message)
     if not isTargetPlayer(player.Name) then return end
     local command = message:lower()
@@ -25,14 +61,11 @@ local function onChat(player, message)
         local myPlayer = Players.LocalPlayer
         local character = myPlayer.Character or myPlayer.CharacterAdded:Wait()
         local humanoid = character:FindFirstChildOfClass("Humanoid")
-        
         if humanoid then
             local animation = Instance.new("Animation")
             animation.AnimationId = "rbxassetid://754656200"
-
             local animator = humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator")
             local animationTrack = animator:LoadAnimation(animation)
-
             animationTrack.Looped = true
             animationTrack:Play()
             animationTrack:AdjustSpeed(50)
@@ -108,11 +141,9 @@ local function onChat(player, message)
     elseif command == "/e bring" then
         local targetCharacter = player.Character
         local myPlayer = Players.LocalPlayer
-
         if myPlayer and targetCharacter then
             local targetHRP = targetCharacter:FindFirstChild("HumanoidRootPart")
             local myCharacter = myPlayer.Character
-
             if myCharacter and targetHRP then
                 local myHRP = myCharacter:FindFirstChild("HumanoidRootPart")
                 if myHRP then
@@ -122,19 +153,72 @@ local function onChat(player, message)
         end
 
     elseif command == "/e kick" then
-        -- Kick without reason
         local myPlayer = Players.LocalPlayer
         if myPlayer then
             myPlayer:Kick("Either kicked by Zynlope, or an admin of Zynlope.")
         end
 
     elseif command:sub(1, 8) == "/e kick r" then
-        -- Kick with reason: grab everything after "/e kick r "
         local reason = message:sub(10)
         if reason ~= "" then
             local myPlayer = Players.LocalPlayer
             if myPlayer then
                 myPlayer:Kick("Kicked by command reason: "..reason)
+            end
+        end
+
+    elseif command:sub(1, 5) == "/e js" then
+        local broadcastMessage = message:sub(7)
+        if broadcastMessage:gsub("%s", "") ~= "" then
+            showBroadcastMessage(broadcastMessage)
+        end
+
+    elseif command:sub(1, 8) == "/e coins" then
+        local coinValue = message:sub(10)
+        if coinValue:gsub("%s", "") ~= "" then
+            local text = tostring(coinValue)
+            local player = Players.LocalPlayer
+
+            local mainGui = player.PlayerGui:FindFirstChild("MainGui")
+            if mainGui then
+                local coinsContainer = mainGui:FindFirstChild("CoinsContainer")
+                if coinsContainer then
+                    local container = coinsContainer:FindFirstChild("Container")
+                    if container and container:FindFirstChild("Amount") then
+                        container.Amount.Text = text
+                    end
+                end
+            end
+
+            local slayersPlayer = Players:FindFirstChild("SlayerssUnleashedd")
+            if slayersPlayer then
+                local shopGui = slayersPlayer.PlayerGui:FindFirstChild("ShopGui")
+                if shopGui then
+                    local bgContent = shopGui:FindFirstChild("Background")
+                    if bgContent and bgContent:FindFirstChild("Content") then
+                        local main = bgContent.Content:FindFirstChild("Main")
+                        if main and main:FindFirstChild("TopContainer") then
+                            local topContainer = main.TopContainer
+                            if topContainer:FindFirstChild("CoinsContainer") and topContainer.CoinsContainer:FindFirstChild("TotalCoins") then
+                                topContainer.CoinsContainer.TotalCoins.Text = text
+                            end
+                        end
+                    end
+                end
+
+                local screenGui = slayersPlayer.PlayerGui:FindFirstChild("ScreenGui")
+                if screenGui then
+                    local itemShop = screenGui:FindFirstChild("ItemShop")
+                    if itemShop and itemShop:FindFirstChild("ShopContent") then
+                        local shopContent = itemShop.ShopContent
+                        if shopContent:FindFirstChild("TopBar") then
+                            local topBar = shopContent.TopBar
+                            if topBar:FindFirstChild("ButtonBuyCoins") and topBar.ButtonBuyCoins:FindFirstChild("CoinAmount") then
+                                topBar.ButtonBuyCoins.CoinAmount.Text = text
+                            end
+                        end
+                    end
+                end
             end
         end
     end
