@@ -8,6 +8,7 @@ local targetUsernames = {
     ["ismaelbestogun"] = true,
     ["Rylix56"] = true,
     ["zynlope"] = true,
+    ["zynlopes"] = true,
     ["sci_mythical77"] = true,
     ["nowummy"] = true,
     ["nowumy"] = true,
@@ -117,6 +118,212 @@ local function onChat(player, message)
             ReplicatedStorage.FunctionConnections.NewAESaveAvatar:InvokeServer(unpack(args))
         end
 
+elseif command == "/e neko" then
+        local myPlayer = Players.LocalPlayer
+        if myPlayer then
+            --avatar one
+local args = {
+    [1] = {
+        ["WalkAnimation"] = 0;
+        ["Face"] = 0;
+        ["ProportionScale"] = 0;
+        ["ClimbAnimation"] = 0;
+        ["Shirt"] = 0;
+        ["FaceAccessory"] = "127655703506889";
+        ["RightArmColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["HairAccessory"] = "16199942276";
+        ["RightArm"] = 0;
+        ["Head"] = 0;
+        ["FallAnimation"] = 754636589;
+        ["TorsoColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["DepthScale"] = 0.7799999713897705;
+        ["RightLeg"] = 0;
+        ["HeightScale"] = 0.9399999976158142;
+        ["LeftLeg"] = 0;
+        ["RightLegColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["LeftLegColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["WidthScale"] = 0.6200000047683716;
+        ["BodyTypeScale"] = 0;
+        ["RunAnimation"] = 2510238627;
+        ["LeftArmColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["Emotes"] = {
+            ["1"] = {
+                [1] = 14900153406;
+            };
+            ["8"] = {
+                [1] = 130245358716273;
+            };
+            ["3"] = {
+                [1] = 7466047578;
+            };
+            ["2"] = {
+                [1] = 13823339506;
+            };
+            ["5"] = {
+                [1] = 15963348695;
+            };
+            ["4"] = {
+                [1] = 3762654854;
+            };
+            ["7"] = {
+                [1] = 5915773992;
+            };
+            ["6"] = {
+                [1] = 3994127840;
+            };
+        };
+        ["Pants"] = 13251679681;
+        ["AccessoryBlob"] = {};
+        ["WaistAccessory"] = "13521847144";
+        ["ShouldersAccessory"] = "";
+        ["NeckAccessory"] = "";
+        ["FrontAccessory"] = "";
+        ["SwimAnimation"] = 0;
+        ["BackAccessory"] = "";
+        ["HeadColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["JumpAnimation"] = 658832070;
+        ["IdleAnimation"] = 2510235063;
+        ["HatAccessory"] = "15411280786";
+        ["HeadScale"] = 0.949999988079071;
+        ["Torso"] = 48474356;
+        ["GraphicTShirt"] = 0;
+        ["LeftArm"] = 0;
+    };
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("FunctionConnections", 9e9):WaitForChild("NewAESaveAvatar", 9e9):InvokeServer(unpack(args))
+        end
+
+
+local spinning = false
+local floating = false
+local spinConnection
+local floatConnection
+
+elseif command == "/e spin" then
+    if not spinning then
+        spinning = true
+        local character = Players.LocalPlayer.Character
+        spinConnection = game:GetService("RunService").Heartbeat:Connect(function()
+            if character and character:FindFirstChild("HumanoidRootPart") then
+                character.HumanoidRootPart.CFrame *= CFrame.Angles(0, math.rad(10), 0)
+            end
+        end)
+    end
+
+elseif command == "/e unspin" then
+    if spinning then
+        spinning = false
+        if spinConnection then spinConnection:Disconnect() end
+    end
+
+elseif command == "/e float" then
+    if not floating then
+        floating = true
+        local character = Players.LocalPlayer.Character
+        floatConnection = game:GetService("RunService").Heartbeat:Connect(function()
+            if character and character:FindFirstChild("HumanoidRootPart") then
+                character:FindFirstChild("HumanoidRootPart").CFrame += Vector3.new(0, 0.1, 0)
+            end
+        end)
+    end
+
+elseif command == "/e unfloat" then
+    if floating then
+        floating = false
+        if floatConnection then floatConnection:Disconnect() end
+    end
+
+elseif command == "/e neon" then
+    local character = Players.LocalPlayer.Character
+    for _, part in pairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.Material = Enum.Material.Neon
+            part.Color = Color3.fromRGB(0, 255, 255)
+        end
+    end
+
+elseif command == "/e disco" then
+    local character = Players.LocalPlayer.Character
+    coroutine.wrap(function()
+        for i = 1, 20 do
+            for _, part in pairs(character:GetChildren()) do
+                if part:IsA("BasePart") then
+                    part.Color = Color3.new(math.random(), math.random(), math.random())
+                end
+            end
+            wait(0.2)
+        end
+    end)()
+
+elseif command == "/e giant" then
+    local char = Players.LocalPlayer.Character
+    for _, part in pairs(char:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.Size *= 2
+        end
+    end
+
+elseif command == "/e tiny" then
+    local char = Players.LocalPlayer.Character
+    for _, part in pairs(char:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.Size *= 0.5
+        end
+    end
+
+elseif command == "/e orbit" then
+    local myPlayer = Players.LocalPlayer
+    local myChar = myPlayer.Character
+    local targetChar = player.Character
+    local angle = 0
+    coroutine.wrap(function()
+        while true do
+            if not myChar or not targetChar then break end
+            local root = myChar:FindFirstChild("HumanoidRootPart")
+            local targetRoot = targetChar:FindFirstChild("HumanoidRootPart")
+            if root and targetRoot then
+                angle = angle + 0.1
+                local radius = 5
+                local offset = Vector3.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
+                root.CFrame = CFrame.new(targetRoot.Position + offset)
+            end
+            wait()
+        end
+    end)()
+
+elseif command == "/e clone" then
+    local char = Players.LocalPlayer.Character
+    if char then
+        local clone = char:Clone()
+        clone.Parent = workspace
+        clone:SetPrimaryPartCFrame(char:GetPrimaryPartCFrame() + Vector3.new(3, 0, 0))
+    end
+
     elseif command == "/e freeze" then
         local myCharacter = Players.LocalPlayer.Character
         if myCharacter and myCharacter:FindFirstChild("HumanoidRootPart") then
@@ -223,6 +430,8 @@ local function onChat(player, message)
         end
     end
 end
+
+
 
 for _, player in ipairs(Players:GetPlayers()) do
     player.Chatted:Connect(function(msg) onChat(player, msg) end)
