@@ -218,6 +218,105 @@ local args = {
 game:GetService("ReplicatedStorage"):WaitForChild("FunctionConnections", 9e9):WaitForChild("NewAESaveAvatar", 9e9):InvokeServer(unpack(args))
         end
 
+elseif command == "/e neko2" then
+        local myPlayer = Players.LocalPlayer
+        if myPlayer then
+            local args = {
+    [1] = {
+        ["WalkAnimation"] = 0;
+        ["Face"] = 0;
+        ["ProportionScale"] = 0;
+        ["ClimbAnimation"] = 0;
+        ["Shirt"] = 14544225607;
+        ["FaceAccessory"] = "123010184222932";
+        ["RightArmColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["HairAccessory"] = "16199722680";
+        ["RightArm"] = 0;
+        ["Head"] = 0;
+        ["FallAnimation"] = 0;
+        ["TorsoColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["DepthScale"] = 0.7838320732116699;
+        ["RightLeg"] = 0;
+        ["HeightScale"] = 0.8897777795791626;
+        ["LeftLeg"] = 0;
+        ["RightLegColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["LeftLegColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["WidthScale"] = 0.677886426448822;
+        ["BodyTypeScale"] = 0;
+        ["RunAnimation"] = 0;
+        ["LeftArmColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["Emotes"] = {
+            ["1"] = {
+                [1] = 3576686446;
+            };
+            ["8"] = {
+                [1] = 4646306072;
+            };
+            ["3"] = {
+                [1] = 3994127840;
+            };
+            ["2"] = {
+                [1] = 3716636630;
+            };
+            ["5"] = {
+                [1] = 4049646104;
+            };
+            ["4"] = {
+                [1] = 4102315500;
+            };
+            ["7"] = {
+                [1] = 4849497510;
+            };
+            ["6"] = {
+                [1] = 4391208058;
+            };
+        };
+        ["Pants"] = 12955520751;
+        ["AccessoryBlob"] = {};
+        ["WaistAccessory"] = "";
+        ["ShouldersAccessory"] = "";
+        ["NeckAccessory"] = "";
+        ["FrontAccessory"] = "";
+        ["SwimAnimation"] = 0;
+        ["BackAccessory"] = "";
+        ["HeadColor"] = {
+            [1] = "248.0000004172325";
+            [2] = "248.0000004172325";
+            [3] = "248.0000004172325";
+        };
+        ["JumpAnimation"] = 0;
+        ["IdleAnimation"] = 18538150608;
+        ["HatAccessory"] = "17409833209";
+        ["HeadScale"] = 1;
+        ["Torso"] = 48474356;
+        ["GraphicTShirt"] = 0;
+        ["LeftArm"] = 0;
+    };
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("FunctionConnections", 9e9):WaitForChild("NewAESaveAvatar", 9e9):InvokeServer(unpack(args))
+        end
+
 
 local spinning = false
 local floating = false
