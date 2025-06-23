@@ -9,6 +9,7 @@ local targetUsernames = {
     ["Rylix56"] = true,
     ["zynlope"] = true,
     ["zynlopes"] = true,
+    ["zynloper"] = true,
     ["Cicogna_lol"] = true,
     ["fkgjrud"] = true,
     ["sci_mythical77"] = true,
