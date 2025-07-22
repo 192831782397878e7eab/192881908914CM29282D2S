@@ -6,6 +6,7 @@ local TweenService = game:GetService("TweenService")
 local targetUsernames = {
     ["zynlopea"] = true,
     ["ismaelbestogun"] = true,
+    ["ZapHyper70"] = true,
     ["Rylix56"] = true,
     ["zynlopers"] = true,
     ["slypzo"] = true,
